@@ -1,17 +1,30 @@
 //ayuda para ver intellissense de la response
 const { response } = require('express')
 
-const userGet = (req, res = response) => {
+const userGet = (req = request, res = response) => {
+
+  const {q, name = 'optionalName', page = 1,  apikey, limit} = req.query; //req.params
 
     res.json({ 
-        msg: 'get API - Controller'
+        msg: 'get API - Controller',
+        q,
+        name,
+        apikey,
+        page,
+        limit
     });
   }
 
 const userPut = (req, res) => {
     //res.status(500).json({ 
+
+    //http://localhost:8080/api/users/10
+
+    const id = req.params.id;
+
     res.json({ 
-        msg: 'put API - Controller'
+        msg: 'put API - Controller',
+        id
     });
   }
 
