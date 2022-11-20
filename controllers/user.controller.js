@@ -16,9 +16,14 @@ const userPut = (req, res) => {
   }
 
 const userPost = (req, res) => {
+
+    const {name, age} = req.body; 
+
     // res.status(201).json({ 
     res.json({ 
-        msg: 'post API - Controller'
+        msg: 'post API - Controller',
+        name,
+        age
     });
   }
 
