@@ -1,6 +1,7 @@
-//ayuda para ver intellissense de la response
-const { response } = require('express')
-const User = require('../models/user')
+const { response } = require('express'); //ayuda para ver intellissense de la response
+const bcryptjs = require('bcryptjs');
+
+const User = require('../models/user');
 
 const userGet = (req = request, res = response) => {
 
@@ -31,9 +32,17 @@ const userPut = (req, res) => {
 
 const userPost = async(req, res) => {
 
-    const body = req.body; 
-    const user = new User(body);
+    const {name, email, password, role } = req.body; 
+    //const {google, ...rest } = req.body; //para muchos elementos mandar rest a new User(rest)
+    const user = new User({name, email, password, role});
 
+    //Verificar si correo existe
+
+    //encriptar password
+    const salt = bcryptjs.genSaltSync(); //10 vueltas por defecto
+    user.password = bcryptjs.hashSync(password, salt);
+
+    //Guardar en DB
     await user.save();
 
     // res.status(201).json({ 
