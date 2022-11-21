@@ -1,8 +1,7 @@
 const { response } = require('express'); //ayuda para ver intellissense de la response
 const bcryptjs = require('bcryptjs');
 
-const User = require('../models/user');
-const { validationResult } = require('express-validator');
+const User = require('../models/user'); 
 
 const userGet = (req = request, res = response) => {
 
@@ -34,10 +33,7 @@ const userPut = (req, res) => {
 const userPost = async(req, res) => {
 
 
-  const errors = validationResult(req);
-  if (!errors.isEmpty() ){
-    return res.status(400).json(errors);
-  }
+
 
     const {name, email, password, role } = req.body; 
     //const {google, ...rest } = req.body; //para muchos elementos mandar rest a new User(rest)
