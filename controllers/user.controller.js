@@ -17,16 +17,28 @@ const userGet = (req = request, res = response) => {
     });
   }
 
-const userPut = (req, res) => {
+const userPut = async(req, res) => {
     //res.status(500).json({ 
 
     //http://localhost:8080/api/users/10
 
-    const id = req.params.id;
+    const {id} = req.params;
+    const { password, google, email,  ...restOfArguments } = req.body;
+
+    //TODO: validar contra base de datos
+    if (password) {
+      
+       //encriptar password
+      const salt = bcryptjs.genSaltSync(); 
+      restOfArguments.password = bcryptjs.hashSync(password, salt);
+
+    }
+
+    const userDB = await User.findByIdAndUpdate( id, restOfArguments, {new: true} )
 
     res.json({ 
-        msg: 'put API - Controller',
-        id
+        msg: 'put API - Controller', 
+        userDB
     });
   }
 
