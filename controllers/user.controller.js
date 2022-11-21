@@ -23,7 +23,7 @@ const userPut = async(req, res) => {
     //http://localhost:8080/api/users/10
 
     const {id} = req.params;
-    const { password, google, email,  ...restOfArguments } = req.body;
+    const { _id, password, google, email,  ...restOfArguments } = req.body;
 
     //TODO: validar contra base de datos
     if (password) {
