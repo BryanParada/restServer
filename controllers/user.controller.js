@@ -31,22 +31,11 @@ const userPut = (req, res) => {
   }
 
 const userPost = async(req, res) => {
-
-
-
-
+ 
     const {name, email, password, role } = req.body; 
     //const {google, ...rest } = req.body; //para muchos elementos mandar rest a new User(rest)
     const user = new User({name, email, password, role});
-
-    //Verificar si correo existe
-    const existEmail = await User.findOne({ email: email});
-    if (existEmail) {
-      return res.status(400).json({
-        msg: `An account with Email ${email} already exists`
-      })
-    }
-
+ 
     //encriptar password
     const salt = bcryptjs.genSaltSync(); //10 vueltas por defecto
     user.password = bcryptjs.hashSync(password, salt);
