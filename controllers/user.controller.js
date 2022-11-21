@@ -1,5 +1,6 @@
 //ayuda para ver intellissense de la response
 const { response } = require('express')
+const User = require('../models/user')
 
 const userGet = (req = request, res = response) => {
 
@@ -28,15 +29,17 @@ const userPut = (req, res) => {
     });
   }
 
-const userPost = (req, res) => {
+const userPost = async(req, res) => {
 
-    const {name, age} = req.body; 
+    const body = req.body; 
+    const user = new User(body);
+
+    await user.save();
 
     // res.status(201).json({ 
     res.json({ 
         msg: 'post API - Controller',
-        name,
-        age
+        user
     });
   }
 
