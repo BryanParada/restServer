@@ -88,6 +88,8 @@ const userDelete = async(req, res) => {
 
     const {id} = req.params;
 
+    const uid = req.uid;
+
     //fisicamente lo borramos
     //const user = await User.findByIdAndDelete(id);
 
@@ -96,7 +98,8 @@ const userDelete = async(req, res) => {
 
     res.json({ 
         msg: 'delete API - Controller (user deleted)',
-        user
+        user,
+        uid
     });
   }
 
