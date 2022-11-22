@@ -31,7 +31,11 @@ const router = Router();
     validateFields
   ], userPost);
 
-  router.delete('/', userDelete);
+  router.delete('/:id', [
+    check('id', 'Not a valid ID').isMongoId(),
+    check('id').custom(userExistsById),
+    validateFields
+  ], userDelete);
 
   router.patch('/', userPatch);
 
