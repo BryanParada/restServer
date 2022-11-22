@@ -87,19 +87,22 @@ const userPost = async(req, res) => {
 const userDelete = async(req, res) => {
 
     const {id} = req.params;
+console.log(id);
 
-    const uid = req.uid;
+    //const uid = req.uid;
 
-    //fisicamente lo borramos
+    //BORRAR UN REGISTRO FISICAMENTE
     //const user = await User.findByIdAndDelete(id);
 
     //cambiar estado usuario
-    const user = await User.findByIdAndUpdate(id, {status: false});
+    const user = await User.findByIdAndUpdate(id, {status: false}); 
+    //const userAuth = req.user;
 
     res.json({ 
         msg: 'delete API - Controller (user deleted)',
         user,
-        uid
+        //uid, 
+        //userAuth
     });
   }
 
