@@ -21,4 +21,27 @@ const isAdminRole = (req = request, res = response, next) => {
 
 }
 
-module.exports = { isAdminRole }
+const hasRole  = ( ...restOfRoles ) =>{
+
+    return (req, res = response, next) =>{
+        //console.log(restOfRoles, req.user.role);
+
+        if (!req.user) {
+            return res.status(500).json({
+                msg: 'Must verify token before the role verification'
+            })
+        }
+
+        if ( !restOfRoles.includes(req.user.role)) {
+            return res.status(401).json({
+                msg: `You must have one of these roles ${restOfRoles} to continue`
+            })
+            
+        }
+
+        
+        next();
+    }
+}
+
+module.exports = { isAdminRole, hasRole }
