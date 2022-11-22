@@ -95,7 +95,7 @@ console.log(id);
     //const user = await User.findByIdAndDelete(id);
 
     //cambiar estado usuario
-    const user = await User.findByIdAndUpdate(id, {status: false}); 
+    const user = await User.findByIdAndUpdate(id, {status: false}, {new: true}); 
     //const userAuth = req.user;
 
     res.json({ 
