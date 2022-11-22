@@ -8,13 +8,29 @@ const userGet = async(req = request, res = response) => {
   //const {q, name = 'optionalName', page = 1,  apikey, limit} = req.query; //req.params
 
   const {limit = 5, from = 0} = req.query;
-  const users = await User.find()
-                          .skip(Number(from)) 
-                          .limit(Number(limit));
+  const query = {status: true}
+
+  // const users = await User.find(query)
+  //                         .skip(Number(from)) 
+  //                         .limit(Number(limit));
+
+  // const total = await User.countDocuments(query);
+
+  //await esperara hasta resolver ambas promesas
+  //promise.all ejecutara simultaneamente ambas promesas
+  //si una da error, todas daran error
+  const [total, users] = await Promise.all([
+    User.countDocuments(query), //1° promesa
+    User.find(query)
+        .skip(Number( from )) 
+        .limit(Number( limit ))
+  ]);
 
     res.json({ 
         msg: 'get API - Controller',
+        total,
         users
+
         // q,
         // name,
         // apikey,
