@@ -15,6 +15,10 @@ RestServer Node JS
 * Controller to use request and response
 * Routes 
 
+## Postman Documentation
+
+https://documenter.getpostman.com/view/7735863/2s8YsnYwij
+
 ## Instalation
 
 - To install the app type the next command in terminal
