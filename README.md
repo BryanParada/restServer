@@ -15,6 +15,33 @@ RestServer Node JS
 * Controller to use request and response
 * Routes 
 
+* CRUD
+* Password encryption
+* Custom Validations
+* Roles creation
+* Connections with MLAB
+* Deploy in Railway
+* Connection with Robo 3T with database in the cloud
+* Setting environment variables
+* Deletion of files
+* Physical removal from the database
+* Elimination by state in a field of the collection
+
+* Introduction to Tokens
+* JWT
+* Custom Login
+* Protection of routes via token
+* Read token payload without signature
+* Deployments on RailWay for production testing
+* Use of Middleware
+
+* Generate Google API Key
+* Generate Secret API
+* Use Google libraries for token validation
+* Deployments to Railway.app
+* Use of Google SignIn in the Front-End
+* Create custom users based on Google responses
+
 ## Postman Documentation
 
 https://documenter.getpostman.com/view/7735863/2s8YsnYwij
