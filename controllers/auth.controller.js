@@ -43,7 +43,8 @@ const login = async(req,res = response) =>{
         })
      
     } catch (error) {
-        return res.status(500).json({
+        console.log(error)
+        res.status(500).json({
             msg: 'Contact the admin!'
         })
     }
@@ -57,17 +58,44 @@ const googleSignIn = async(req, res = response) => {
 
     try {
 
-        const googleUser = await googleVerify( id_token );
-        console.log(googleUser);
+        const {name, img, email} = await googleVerify( id_token );
+        
+        let user = await User.findOne( {email}); 
+        
+        if (!user) {
+              
+            //crearlo
+            const data = {
+                name,
+                email,
+                password: ':P', 
+                img, 
+                google: true
+            };
+
+            user = new User( data );
+            await user.save();
+        }
+
+        // Si el usuario en DB esta en false voy a negar su autenticacion en mi app
+        if ( !user.status){
+            return res.status(401).json({
+                msg: 'Contact the admin, user is blocked'
+            })
+        }
+
+        //generar el JWT
+        const token = await generateJWT(user.id);
         
         res.json({
             msg: 'All OK!',
-            id_token
+            id_token,
+            user,
+            token
         })
 
     } catch (error) {
-        json.status(400).json({
-            ok: false,
+        res.status(400).json({ 
             msg: 'Token could not be verified'
         })
     }
