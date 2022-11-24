@@ -42,6 +42,15 @@ RestServer Node JS
 * Use of Google SignIn in the Front-End
 * Create custom users based on Google responses
 
+* CRUD of categories and products
+* Relations
+* populate
+* searches
+* regex
+* skip
+* limit
+* Deployments to Railway.app
+
 ## Postman Documentation
 
 https://documenter.getpostman.com/view/7735863/2s8YsnYwij
