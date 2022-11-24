@@ -14,11 +14,37 @@ const searchUsers = async(term = '', res = response) => {
     const isMongoID = ObjectId.isValid( term ); //true
 
     if (isMongoID) {
+        //TAMBIEN!! se puede colocar
+        //const user = await User.find({ _id: term, status: true });
+        //asi nos evitamos el filtro and de abajo
         const user = await User.findById( term );
         return res.json({
             results: (user) ? [user] : [] 
         })
     }
+
+    const regex = new RegExp( term, 'i');
+    const query = {  
+        $or: [{name: regex}, {email: regex}],
+        $and: [{status: true}] 
+    }
+
+    // const users = await User.find({ 
+    //     //$or: [{name: regex, status: true}, {email: regex, status: true}]
+    //     $or: [{name: regex}, {email: regex}],
+    //     $and: [{status: true}] 
+    //  });
+
+    const [total, users] = await Promise.all([
+        User.count(query),
+        User.find(query)
+    ])
+
+
+    res.json({
+        total,
+        results: users
+    })
 
 }
 
