@@ -3,7 +3,8 @@ const { Schema, model} = require('mongoose')
 const CategorySchema = Schema({
     name: {
         type: String,
-        required: [true, 'Category is required']
+        required: [true, 'Category is required'],
+        unique: true
     },
     status:{
         type: Boolean,
