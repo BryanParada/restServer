@@ -1,5 +1,5 @@
 const { response } = require("express");
-const { User } = require("../models");
+const { User, Category, Product } = require("../models");
 const { ObjectId } = require('mongoose').Types;
 
 const allowedCollections = [
@@ -48,6 +48,67 @@ const searchUsers = async(term = '', res = response) => {
 
 }
 
+const searchCategories = async(term = '', res = response) => {
+
+    const isMongoID = ObjectId.isValid( term ); //true
+
+    if (isMongoID) { 
+        const category = await Category.findById( term );
+        return res.json({
+            results: (category) ? [category] : [] 
+        })
+    }
+
+    const regex = new RegExp( term, 'i');
+    const query = {  
+        $or: [{name: regex}],
+        $and: [{status: true}] 
+    }
+ 
+    const [total, categories] = await Promise.all([
+        Category.count(query),
+        Category.find(query)
+    ])
+
+
+    res.json({
+        total,
+        results: categories
+    })
+
+}
+
+const searchProducts = async(term = '', res = response) => {
+
+    const isMongoID = ObjectId.isValid( term ); //true
+
+    if (isMongoID) { 
+        const product = await Product.findById( term )
+                                     .populate('category','name');
+        return res.json({
+            results: (product) ? [product] : [] 
+        })
+    }
+
+    const regex = new RegExp( term, 'i');
+    const query = {  
+        $or: [{name: regex}],
+        $and: [{status: true}] 
+    }
+ 
+    const [total, products] = await Promise.all([
+        Product.count(query),
+        Product.find(query)
+    ])
+
+
+    res.json({
+        total,
+        results: products
+    })
+
+}
+
 
 const search = (req, res = response) =>{
  
@@ -64,10 +125,10 @@ const search = (req, res = response) =>{
             searchUsers(term, res)
         break;
         case 'categories':
-
+            searchCategories(term, res)
         break;
         case 'products':
-
+            searchProducts(term, res)
         break;
 
         default:
