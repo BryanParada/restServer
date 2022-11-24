@@ -1,5 +1,6 @@
-const Role = require('../models/role');
-const User = require('../models/user');
+const Category = require('../models/category');
+const Role     = require('../models/role');
+const User     = require('../models/user');
 
 
 const isValidRole = async(role = '') =>{
@@ -35,10 +36,22 @@ const userExistsById = async( id ) => {
     }
 };
 
+const existsCategory = async( id ) => {
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        const categoryExists = await Category.findById( id ).exec();
+        if ( !categoryExists ) {
+            throw new Error(`The ID ${id} does not exists`);
+        }
+    } else {
+        throw new Error(`${ id } is not valid`);
+    }
+};
+
 
 
 module.exports = {
     isValidRole,
     emailExists,
-    userExistsById
+    userExistsById,
+    existsCategory
 }
