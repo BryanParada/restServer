@@ -19,8 +19,7 @@ RestServer Node JS
 * Password encryption
 * Custom Validations
 * Roles creation
-* Connections with MLAB
-* Deploy in Railway
+* Connections with MLAB 
 * Connection with Robo 3T with database in the cloud
 * Setting environment variables
 * Deletion of files
@@ -31,14 +30,12 @@ RestServer Node JS
 * JWT
 * Custom Login
 * Protection of routes via token
-* Read token payload without signature
-* Deployments on RailWay for production testing
+* Read token payload without signature 
 * Use of Middleware
 
 * Generate Google API Key
 * Generate Secret API
-* Use Google libraries for token validation
-* Deployments to Railway.app
+* Use Google libraries for token validation 
 * Use of Google SignIn in the Front-End
 * Create custom users based on Google responses
 
