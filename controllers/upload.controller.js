@@ -1,7 +1,7 @@
 
 const { response } = require("express");
 const { uploadFile } = require("../helpers");
-
+const { User, Product} = require('../models')
 
 const loadFile = async(req, res = response) => {
 
@@ -31,8 +31,40 @@ const updateImage = async(req, res = response) =>{
 
   const { id, collection} = req.params;
 
+  let model;
+
+  switch (collection) {
+    case 'users':
+        model = await User.findById( id );
+        if (!model) {
+          return res.status(400).json({
+            msg: `There is no user with the id ${id}`
+          });
+        }
+    break;
+
+    case 'products':
+        model = await Product.findById( id );
+        if (!model) {
+          return res.status(400).json({
+            msg: `There is no Product with the id ${id}`
+          });
+        }
+    break;
+
+    default:
+        return res.status(500).json({ msg: 'We forgot to validate this!'});
+
+        
+  }
+
+  const name = await uploadFile( req.files, undefined, collection);
+  model.img = name;
+
+  await model.save();
+
   res.json({
-    id, collection
+    model
   })
 
 }
