@@ -7,7 +7,7 @@ const { validateJWT, validateFields, isAdminRole } = require('../middlewares');
  
 const router = Router();
 
-router.post('/', loadFile);
+router.post('/', [], loadFile);
  
 
 module.exports = router;
