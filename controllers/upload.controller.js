@@ -1,4 +1,5 @@
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const { response } = require("express");
 
@@ -24,20 +25,19 @@ const loadFile = (req, res = response) => {
       })
     }
 
-    res.json({extension})
+    const tempName = uuidv4() + '.' + extension;
     
+    const uploadPath = path.join(__dirname, '../uploads/', tempName);
+    console.log(uploadPath);
     
-    // const uploadPath = path.join(__dirname, '../uploads/', fileUp.name);
-    // console.log(uploadPath);
-    
-    // fileUp.mv(uploadPath, (err) => {
-    //   if (err) {
-    //     console.log(err); 
-    //     return res.status(500).json({err});
-    //   }
+    fileUp.mv(uploadPath, (err) => {
+      if (err) {
+        console.log(err); 
+        return res.status(500).json({err});
+      }
   
-    //   res.json({ msg: 'File uploaded to ' + uploadPath});
-    // });
+      res.json({ msg: 'File uploaded to ' + uploadPath});
+    });
 
 
 }
