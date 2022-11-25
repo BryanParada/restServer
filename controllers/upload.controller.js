@@ -24,13 +24,21 @@ const loadFile = async(req, res = response) => {
       res.status(400).json({msg});
     }
 
+ 
+}
 
+const updateImage = async(req, res = response) =>{
 
+  const { id, collection} = req.params;
 
+  res.json({
+    id, collection
+  })
 
 }
 
 
 module.exports = {
-    loadFile
+    loadFile,
+    updateImage
 }

@@ -60,6 +60,20 @@ const existsProduct = async( id ) => {
     }
 };
 
+/**
+ * Validar colecciones permitidas
+ */
+const allowedCollection = ( collection = '', collections = [] ) => {
+
+    const included = collections.includes( collection );
+    if (!included) {
+        throw new Error(`The collection ${ collection } is not allowed, must be: ${ collections }`)
+    }
+
+    return true;
+
+}
+
 
 
 module.exports = {
@@ -67,5 +81,6 @@ module.exports = {
     emailExists,
     userExistsById,
     existsCategory,
-    existsProduct
+    existsProduct,
+    allowedCollection
 }
