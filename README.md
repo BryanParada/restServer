@@ -48,6 +48,17 @@ RestServer Node JS
 * limit
 * Deployments to Railway.app
 
+* file upload
+* file validations
+* Re-locate files
+* Update user image
+* Delete files
+* Upload images to products
+* Service to display and protect images with Cloudinary
+* Use of said images in the front-end
+* Cloudinary SDK
+
+
 ## Postman Documentation
 
 https://documenter.getpostman.com/view/7735863/2s8YsnYwij
