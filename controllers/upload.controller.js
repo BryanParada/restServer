@@ -1,3 +1,5 @@
+const path = require('path');
+const fs   = require('fs');
 
 const { response } = require("express");
 const { uploadFile } = require("../helpers");
@@ -61,6 +63,15 @@ const updateImage = async(req, res = response) =>{
         return res.status(500).json({ msg: 'We forgot to validate this!'});
 
         
+  }
+
+  //Limpia imagenes anteriores
+  if (model.img) {
+    //hay que borrar la imagen del servidor
+    const pathImage = path.join(__dirname, '../uploads', collection, model.img);
+    if (fs.existsSync(pathImage)) {
+        fs.unlinkSync(pathImage);
+    } 
   }
 
   const name = await uploadFile( req.files, undefined, collection);
