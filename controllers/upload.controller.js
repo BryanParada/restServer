@@ -126,14 +126,21 @@ const updateImageCloudinary = async(req, res = response) =>{
 
   //Limpia imagenes anteriores
   if (model.img) {
-    //TODO: 
-
+      const nameArr = model.img.split('/');
+      const name    = nameArr[nameArr.length - 1]; // para obtener el ultimo
+      const [ public_id ]    = name.split('.');
+      cloudinary.uploader.destroy( public_id );
+ 
   }
  
   const {tempFilePath} = req.files.fileUp
   const {secure_url} = await cloudinary.uploader.upload( tempFilePath );
+  model.img = secure_url;
 
-  res.json( secure_url );
+  await model.save();
+
+
+  res.json( model );
 
 }
 
