@@ -1,6 +1,9 @@
 const path = require('path');
 const fs   = require('fs');
 
+const cloudinary = require('cloudinary').v2
+cloudinary.config( process.env.CLOUDINARY_URL);
+
 const { response } = require("express");
 const { uploadFile } = require("../helpers");
 const { User, Product} = require('../models')
@@ -85,6 +88,55 @@ const updateImage = async(req, res = response) =>{
 
 }
 
+const updateImageCloudinary = async(req, res = response) =>{
+
+  // if (!req.files || Object.keys(req.files).length === 0 || !req.files.fileUp) {
+  //   res.status(400).json({ msg: 'No files were uploaded.'});
+  //   return;
+  // }
+
+  const { id, collection} = req.params;
+
+  let model;
+
+  switch (collection) {
+    case 'users':
+        model = await User.findById( id );
+        if (!model) {
+          return res.status(400).json({
+            msg: `There is no user with the id ${id}`
+          });
+        }
+    break;
+
+    case 'products':
+        model = await Product.findById( id );
+        if (!model) {
+          return res.status(400).json({
+            msg: `There is no Product with the id ${id}`
+          });
+        }
+    break;
+
+    default:
+        return res.status(500).json({ msg: 'We forgot to validate this!'});
+
+        
+  }
+
+  //Limpia imagenes anteriores
+  if (model.img) {
+    //TODO: 
+
+  }
+ 
+  const {tempFilePath} = req.files.fileUp
+  const {secure_url} = await cloudinary.uploader.upload( tempFilePath );
+
+  res.json( secure_url );
+
+}
+
 const showImage = async(req, res = response) => {
 
   const { id, collection} = req.params;
@@ -134,5 +186,6 @@ const showImage = async(req, res = response) => {
 module.exports = {
     loadFile,
     updateImage,
-    showImage
+    showImage,
+    updateImageCloudinary
 }
