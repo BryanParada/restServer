@@ -125,7 +125,8 @@ const showImage = async(req, res = response) => {
     } 
   }
 
-  res.json({ msg: 'Place holder missing'})
+  const pathImageDefault = path.join(__dirname, '../assets/no-image.jpg');
+  res.sendFile(pathImageDefault); 
  
 }
 
