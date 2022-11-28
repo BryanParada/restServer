@@ -174,15 +174,19 @@ const showImage = async(req, res = response) => {
 
         
   }
-
-  //Limpia imagenes anteriores
-  if (model.img) {
-    //hay que borrar la imagen del servidor
-    const pathImage = path.join(__dirname, '../uploads', collection, model.img);
-    if (fs.existsSync(pathImage)) {
-        return res.sendFile(pathImage)
-    } 
+  
+  if ( model.img ) {
+    return res.redirect(model.img)
   }
+  
+  // //Limpia imagenes anteriores
+  // if (model.img) {
+  //   //hay que borrar la imagen del servidor
+  //   const pathImage = path.join(__dirname, '../uploads', collection, model.img);
+  //   if (fs.existsSync(pathImage)) {
+  //       return res.redirect(pathImage)
+  //   } 
+  // }
 
   const pathImageDefault = path.join(__dirname, '../assets/no-image.jpg');
   res.sendFile(pathImageDefault); 
