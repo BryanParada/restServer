@@ -85,8 +85,53 @@ const updateImage = async(req, res = response) =>{
 
 }
 
+const showImage = async(req, res = response) => {
+
+  const { id, collection} = req.params;
+
+  let model;
+
+  switch (collection) {
+    case 'users':
+        model = await User.findById( id );
+        if (!model) {
+          return res.status(400).json({
+            msg: `There is no user with the id ${id}`
+          });
+        }
+    break;
+
+    case 'products':
+        model = await Product.findById( id );
+        if (!model) {
+          return res.status(400).json({
+            msg: `There is no Product with the id ${id}`
+          });
+        }
+    break;
+
+    default:
+        return res.status(500).json({ msg: 'We forgot to validate this!'});
+
+        
+  }
+
+  //Limpia imagenes anteriores
+  if (model.img) {
+    //hay que borrar la imagen del servidor
+    const pathImage = path.join(__dirname, '../uploads', collection, model.img);
+    if (fs.existsSync(pathImage)) {
+        return res.sendFile(pathImage)
+    } 
+  }
+
+  res.json({ msg: 'Place holder missing'})
+ 
+}
+
 
 module.exports = {
     loadFile,
-    updateImage
+    updateImage,
+    showImage
 }
